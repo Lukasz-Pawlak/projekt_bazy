@@ -1,4 +1,4 @@
-<mxfile host="65bd71144e" modified="2021-01-09T00:31:29.835Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Code/1.52.1 Chrome/83.0.4103.122 Electron/9.3.5 Safari/537.36" etag="JjzxcynoVdR0l56Zb862" version="13.10.0" type="embed">
+<mxfile host="65bd71144e" modified="2021-01-09T17:32:04.342Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Code/1.52.1 Chrome/83.0.4103.122 Electron/9.3.5 Safari/537.36" etag="ZCSKJOVY7nDD6abRymEp" version="13.10.0" type="embed">
     <diagram id="I3wex4niQxwdPpj7cyRc" name="Page-1">
         <mxGraphModel dx="825" dy="479" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
             <root>
@@ -67,7 +67,7 @@
                         <mxPoint x="355" y="140" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="1wxJ6Ee9MIY7df9GgSbu-36" value="" style="fontSize=12;html=1;endArrow=ERzeroToOne;startArrow=ERzeroToOne;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0.25;exitY=0;exitDx=0;exitDy=0;startFill=1;" parent="1" source="1wxJ6Ee9MIY7df9GgSbu-10" target="1wxJ6Ee9MIY7df9GgSbu-6" edge="1">
+                <mxCell id="1wxJ6Ee9MIY7df9GgSbu-36" value="" style="fontSize=12;html=1;endArrow=ERzeroToOne;startArrow=ERmandOne;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0.25;exitY=0;exitDx=0;exitDy=0;startFill=0;edgeStyle=orthogonalEdgeStyle;curved=1;" parent="1" source="1wxJ6Ee9MIY7df9GgSbu-10" target="1wxJ6Ee9MIY7df9GgSbu-6" edge="1">
                     <mxGeometry width="100" height="100" relative="1" as="geometry">
                         <mxPoint x="260" y="200" as="sourcePoint"/>
                         <mxPoint x="265" y="170" as="targetPoint"/>
@@ -93,22 +93,22 @@
                 <mxCell id="1wxJ6Ee9MIY7df9GgSbu-45" value="is recipient of" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;" parent="1" vertex="1">
                     <mxGeometry x="595" y="160" width="90" height="20" as="geometry"/>
                 </mxCell>
-                <mxCell id="4" value="" style="fontSize=12;html=1;endArrow=ERzeroToMany;startArrow=ERoneToMany;startFill=0;endFill=1;exitX=0.75;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="1wxJ6Ee9MIY7df9GgSbu-10" target="1wxJ6Ee9MIY7df9GgSbu-2">
+                <mxCell id="4" value="" style="fontSize=12;html=1;endArrow=ERzeroToMany;startArrow=ERoneToMany;startFill=0;endFill=1;exitX=0.75;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;edgeStyle=orthogonalEdgeStyle;curved=1;" parent="1" source="1wxJ6Ee9MIY7df9GgSbu-10" target="1wxJ6Ee9MIY7df9GgSbu-2" edge="1">
                     <mxGeometry width="100" height="100" relative="1" as="geometry">
                         <mxPoint x="450" y="310" as="sourcePoint"/>
                         <mxPoint x="450" y="170" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="5" value="Consists of" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;" vertex="1" parent="1">
+                <mxCell id="5" value="Consists of" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;" parent="1" vertex="1">
                     <mxGeometry x="490" y="190" width="70" height="20" as="geometry"/>
                 </mxCell>
-                <mxCell id="6" value="Is part of" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;" vertex="1" parent="1">
+                <mxCell id="6" value="Is part of" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;" parent="1" vertex="1">
                     <mxGeometry x="450" y="230" width="60" height="20" as="geometry"/>
                 </mxCell>
-                <mxCell id="10" value="concerns" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;" vertex="1" parent="1">
+                <mxCell id="10" value="concerns" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;" parent="1" vertex="1">
                     <mxGeometry x="220" y="180" width="60" height="20" as="geometry"/>
                 </mxCell>
-                <mxCell id="11" value="is the subject&lt;br&gt;of the offer" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;" vertex="1" parent="1">
+                <mxCell id="11" value="is the subject&lt;br&gt;of the offer" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;" parent="1" vertex="1">
                     <mxGeometry x="250" y="220" width="90" height="30" as="geometry"/>
                 </mxCell>
             </root>
