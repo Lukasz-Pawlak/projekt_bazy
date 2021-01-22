@@ -3,6 +3,7 @@ package edu.pwr.db.view;
 import edu.pwr.db.model.Item;
 
 import javax.swing.*;
+import javax.swing.plaf.metal.MetalTabbedPaneUI;
 import java.awt.*;
 import java.util.List;
 
@@ -13,6 +14,13 @@ public class AppWindow extends JFrame {
     }
 
     private final SearchResultPanel searchResultPanel;
+    private final SearchInputPanel searchInputPanel;
+    private final InvoiceGeneratorPanel invoiceGeneratorPanel;
+    private final CustomerAddPanel customerAddPanel;
+    private final ProductAddPanel productAddPanel;
+    private final AlterOfferPanel alterOfferPanel;
+
+    private final JTabbedPane tabbedPane;
 
     public AppWindow() {
         super("shop-app");
@@ -25,17 +33,38 @@ public class AppWindow extends JFrame {
         setBounds(x - halfInitialWidth, y - halfInitialHeight,
                 2 * halfInitialWidth, 2 * halfInitialHeight);
         setResizable(true);
+
+        tabbedPane = new JTabbedPane(JTabbedPane.LEFT, JTabbedPane.SCROLL_TAB_LAYOUT);
+        tabbedPane.setUI(new MetalTabbedPaneUI() {
+            @Override
+            protected int calculateTabHeight(int a, int b, int c) {
+                return 40; // this is pixel height of the tab
+            }
+        });
+
         searchResultPanel = new SearchResultPanel();
+        searchInputPanel = new SearchInputPanel();
+        invoiceGeneratorPanel = new InvoiceGeneratorPanel();
+        customerAddPanel = new CustomerAddPanel();
+        productAddPanel = new ProductAddPanel();
+        alterOfferPanel = new AlterOfferPanel();
 
         // tmp, for display check
         Item[] list = {new Item(), new Item(), new Item(), new Item()};
         searchResultPanel.setItems(list);
 
-        add(searchResultPanel, BorderLayout.CENTER);
+        tabbedPane.add(searchInputPanel, "Search products");
+        tabbedPane.add(searchResultPanel, "Search results");
+        tabbedPane.add(invoiceGeneratorPanel, "Create invoice");
+        tabbedPane.add(customerAddPanel, "Add customer");
+        tabbedPane.add(productAddPanel, "Add product");
+        tabbedPane.add(alterOfferPanel, "Change offer");
+
+        add(tabbedPane);
     }
 
     public void start() {
-        new LoginDialog(this);
+        //new LoginDialog(this); // TODO: uncomment this when started making db logging
         setVisible(true);
     }
 
