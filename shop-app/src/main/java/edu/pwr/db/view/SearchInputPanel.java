@@ -3,6 +3,7 @@ package edu.pwr.db.view;
 import edu.pwr.db.model.Item;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
 public class SearchInputPanel extends JPanel {
@@ -10,20 +11,22 @@ public class SearchInputPanel extends JPanel {
     protected final JButton search;
 
     public SearchInputPanel() {
+        setBorder(new EmptyBorder(30, 30, 30, 30));
         JPanel master = new JPanel();
         master.setLayout(new GridBagLayout());
         GridBagConstraints gc = new GridBagConstraints();
         gc.fill = GridBagConstraints.HORIZONTAL;
-        gc.insets = new Insets(20, 20, 20, 20);
 
         JLabel jlBrand = new JLabel("brand: ");
         gc.gridx = 0;
         gc.gridy = 0;
+        gc.weighty = 1;
+        gc.weightx = 1;
         gc.gridwidth = 1;
         master.add(jlBrand, gc);
 
         brands = new JComboBox<>();
-        brands.setPrototypeDisplayValue(Item.ANY);
+        brands.addItem(Item.ANY);
         gc.gridx = 1;
         master.add(brands, gc);
 
@@ -33,6 +36,7 @@ public class SearchInputPanel extends JPanel {
         master.add(jlColor, gc);
 
         colors = new JComboBox<>();
+        colors.addItem(Item.ANY);
         gc.gridx = 1;
         master.add(colors, gc);
 
@@ -42,6 +46,7 @@ public class SearchInputPanel extends JPanel {
         master.add(jlLevel, gc);
 
         coverageLevels = new JComboBox<>();
+        coverageLevels.addItem(Item.ANY);
         gc.gridx = 1;
         master.add(coverageLevels, gc);
 
@@ -51,6 +56,7 @@ public class SearchInputPanel extends JPanel {
         master.add(jlTypes, gc);
 
         types = new JComboBox<>();
+        types.addItem(Item.ANY);
         gc.gridx = 1;
         master.add(types, gc);
 
@@ -58,7 +64,9 @@ public class SearchInputPanel extends JPanel {
         gc.gridx = 0;
         gc.gridy = 4;
         gc.gridwidth = 2;
-        master.add(search, gc);
+        JPanel buttonHolder = new JPanel();
+        buttonHolder.add(search);
+        master.add(buttonHolder, gc);
 
         setLayout(new BorderLayout());
         add(master, BorderLayout.CENTER);
