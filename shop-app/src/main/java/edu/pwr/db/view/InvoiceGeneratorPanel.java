@@ -26,7 +26,7 @@ public class InvoiceGeneratorPanel extends JPanel {
         addOffer = new JButton("add entry");
         endCreation = new JButton("confirm");
         cancelCreation = new JButton("cancel");
-        unitsCountInput = new JTextArea(); // TODO: perhaps make it with placeholder - extract JTextAreaWithPlaceholder to be public first
+        unitsCountInput = new JTextAreaWithPlaceholder("units");
         alreadyCreatedView = new JTextArea();
         selectedOfferInfo = new JTextArea();
         selectedOfferInfo.setEditable(false);
