@@ -77,11 +77,8 @@ public class ProductAddPanel extends JPanel {
         gc.gridwidth = 2;
         panel.add(add, gc);
 
-        add.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // pobieramy dane i dodajemy produkt
-            }
+        add.addActionListener(e -> {
+            // pobieramy dane i dodajemy produkt
         });
 
         setLayout(new BorderLayout());
