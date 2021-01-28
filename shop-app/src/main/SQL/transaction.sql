@@ -5,11 +5,11 @@ create function addInvoice(cl int) returns int
 begin
     declare date DATETIME;
     declare result int;
-    SET @date=now();
+    SET date=now();
     insert into Invoices (dateIssued,client)
     values (date,cl);
-    SET @result=(select id from Invoices where client=cl and dateIssued=date);
-    return @result;
+    select id from Invoices where client=cl and dateIssued=date limit 1 into result;
+    return result;
 end $$
 delimiter ;
 
