@@ -47,7 +47,7 @@ drop table if exists Offer;
 create table Offer (
     id int primary key auto_increment,
     pricePerUnit decimal(5, 2),
-    unitsInStock int,
+    unitsInStock int check (unitsInStock>=0),
     product int,
 
     foreign key (product) references Products(id) 
