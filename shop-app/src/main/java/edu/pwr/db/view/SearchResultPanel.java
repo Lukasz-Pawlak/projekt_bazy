@@ -4,6 +4,7 @@ import edu.pwr.db.Logger;
 import edu.pwr.db.model.Item;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
 public class SearchResultPanel extends JPanel {
@@ -20,9 +21,11 @@ public class SearchResultPanel extends JPanel {
 
         selectButton.addActionListener(e -> {
             Item result = items.getSelectedValue();
+            if (result != null) // dont forget about this line <--
             // TODO: do something with selected value
             Logger.debug(result.toString());
         });
+        setBorder(new EmptyBorder(40, 40, 40, 40)); // padding
     }
 
     public void setItems(Item[] items) {

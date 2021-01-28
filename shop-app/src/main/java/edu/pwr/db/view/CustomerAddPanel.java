@@ -3,7 +3,6 @@ package edu.pwr.db.view;
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
-import java.awt.event.*;
 
 public class CustomerAddPanel extends JPanel {
     protected final JButton add;
@@ -64,44 +63,5 @@ public class CustomerAddPanel extends JPanel {
         add.addActionListener(e -> {
             //TODO 'add' button functionality
         });
-
-    }
-
-    private static class JTextAreaWithPlaceholder extends JTextArea {
-        private final String placeholder;
-        private boolean focused;
-
-        JTextAreaWithPlaceholder(String placeholder) {
-            this.placeholder = placeholder;
-            focused = false;
-            this.addFocusListener(new FocusAdapter() {
-                @Override
-                public void focusLost(FocusEvent e) {
-                    super.focusLost(e);
-                    focused = false;
-                    repaint();
-                }
-
-                @Override
-                public void focusGained(FocusEvent e) {
-                    super.focusGained(e);
-                    focused = true;
-                    repaint();
-                }
-            });
-        }
-
-        @Override
-        protected void paintComponent(java.awt.Graphics g) {
-            super.paintComponent(g);
-
-            if(getText().isEmpty() && !focused) {
-                Graphics2D g2 = (Graphics2D)g.create();
-                g2.setBackground(Color.gray);
-                //g2.setFont(getFont().deriveFont(Font.ITALIC));
-                g2.drawString(placeholder, 5, 10);
-                g2.dispose();
-            }
-        }
     }
 }
