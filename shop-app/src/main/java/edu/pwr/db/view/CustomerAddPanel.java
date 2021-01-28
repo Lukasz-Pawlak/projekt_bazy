@@ -1,87 +1,108 @@
 package edu.pwr.db.view;
 
-import edu.pwr.db.model.Item;
-
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 
 public class CustomerAddPanel extends JPanel {
     protected final JButton add;
-    public CustomerAddPanel(){
+    public CustomerAddPanel() {
         JPanel panel = new JPanel();
         GridBagConstraints gc = new GridBagConstraints();
         panel.setLayout(new GridBagLayout());
         gc.fill = GridBagConstraints.HORIZONTAL;
-        gc.insets = new Insets(20, 20, 20, 20);
+        gc.insets = new Insets(10, 10, 0, 0);
+        gc.anchor = GridBagConstraints.NORTHWEST;
 
-        JLabel jlName = new JLabel("Name: ");
+        JLabel jlName = new JLabel("Name:");
         gc.gridx = 0;
         gc.gridy = 0;
         gc.gridwidth=1;
+        gc.weighty = 0;
+        gc.weightx = 0;
         panel.add(jlName, gc);
 
-        JTextField inputName = new JTextField("Enter name              ");
+        JTextArea inputName = new JTextAreaWithPlaceholder("Enter name");
         gc.gridx = 1;
+        gc.weightx = 5;
         panel.add(inputName,gc);
 
-        JLabel jlSurname = new JLabel("Surname: ");
+        JLabel jlSurname = new JLabel("Surname:");
         gc.gridx = 0;
         gc.gridy = 1;
+        gc.weightx = 1;
         panel.add(jlSurname, gc);
 
-        JTextField inputSurname = new JTextField("Enter surname                ");
+        JTextArea inputSurname = new JTextAreaWithPlaceholder("Enter surname");
         gc.gridx=1;
         panel.add(inputSurname,gc);
 
-        JLabel jlAddress = new JLabel("Addres");
+        JLabel jlAddress = new JLabel("Address:");
         gc.gridx=0;
         gc.gridy=2;
         panel.add(jlAddress,gc);
 
-        JTextField inputAddress = new JTextField("Enter addres           ");
+        JTextArea inputAddress = new JTextAreaWithPlaceholder("Enter address");
         gc.gridx=1;
+        gc.fill = GridBagConstraints.BOTH;
+        gc.weighty = 10;
         panel.add(inputAddress,gc);
 
         add = new JButton("Add");
+        gc.gridx = 0;
         gc.gridy=3;
-        gc.gridwidth = 4;
+        gc.gridwidth = 2;
+        gc.weighty = 1;
+        gc.fill = GridBagConstraints.NONE;
+        gc.anchor = GridBagConstraints.CENTER;
         panel.add(add, gc);
         setLayout(new BorderLayout());
         add(panel, BorderLayout.CENTER);
-
-        inputName.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                super.mouseClicked(e);
-                inputName.setText("");
-            }
-        });
-        inputSurname.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                super.mouseClicked(e);
-                inputSurname.setText("");
-
-            }
-        });
-        inputAddress.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                super.mouseClicked(e);
-                inputAddress.setText("");
-            }
-        });
-
-        add.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-            }
+        Border padding = BorderFactory.createEmptyBorder(10, 10, 20, 20);
+        setBorder(padding);
+        add.addActionListener(e -> {
+            //TODO 'add' button functionality
         });
 
     }
+
+    private static class JTextAreaWithPlaceholder extends JTextArea {
+        private final String placeholder;
+        private boolean focused;
+
+        JTextAreaWithPlaceholder(String placeholder) {
+            this.placeholder = placeholder;
+            focused = false;
+            this.addFocusListener(new FocusAdapter() {
+                @Override
+                public void focusLost(FocusEvent e) {
+                    super.focusLost(e);
+                    focused = false;
+                    repaint();
+                }
+
+                @Override
+                public void focusGained(FocusEvent e) {
+                    super.focusGained(e);
+                    focused = true;
+                    repaint();
+                }
+            });
+        }
+
+        @Override
+        protected void paintComponent(java.awt.Graphics g) {
+            super.paintComponent(g);
+
+            if(getText().isEmpty() && !focused) {
+                Graphics2D g2 = (Graphics2D)g.create();
+                g2.setBackground(Color.gray);
+                //g2.setFont(getFont().deriveFont(Font.ITALIC));
+                g2.drawString(placeholder, 5, 10);
+                g2.dispose();
+            }
+        }
+    }
+
 }

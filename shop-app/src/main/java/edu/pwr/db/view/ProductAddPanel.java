@@ -24,6 +24,8 @@ public class ProductAddPanel extends JPanel {
         gc.gridx = 0;
         gc.gridy = 0;
         gc.gridwidth = 1;
+        gc.weighty = 1;
+        gc.weightx = 1;
         panel.add(jlBrand, gc);
 
         brands = new JComboBox<Item>();
