@@ -1,7 +1,4 @@
-USE shop;
-drop table if exists Users;
-create table Users (
-    id int primary key auto_increment,
-    login varchar(20),
-    password VARCHAR(50)
-);
+drop user if exists 'admin'@'localhost';
+create user 'admin'@'localhost';
+set password for 'admin'@'localhost' = 'admin';
+grant select, update, drop, insert on shop.* to 'admin'@'localhost'; -- nwm czy drop też, to niby admin ale no nie wiem
