@@ -9,17 +9,17 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 
 public class SearchResultPanel extends JPanel {
-    //private final JList<Item> items;
+    private final JList<Item> items;
     private JTable table; // I think I've seen this object is good at handling SQL query results, maybe it is worth giving a shot
     private final JButton selectButton;
     private static Object[] columnNames = {"awsd", "Aasda", "ASDasd a"};
     public SearchResultPanel() {
-        //items = new JList<>();
+        items = new JList<>();
         selectButton = new JButton("select");
         setLayout(new BorderLayout());
-        //add(items, BorderLayout.CENTER);
+        add(items, BorderLayout.CENTER);
         add(selectButton, BorderLayout.SOUTH);
-        //table = new JTable();
+        /*
         DefaultTableModel model = new DefaultTableModel();
         model.setColumnIdentifiers(columnNames);
 //DefaultTableModel model = new DefaultTableModel(tm.getData1(), tm.getColumnNames());
@@ -35,6 +35,7 @@ public class SearchResultPanel extends JPanel {
                 JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 
         add(table, BorderLayout.CENTER);
+         */
 
         /*selectButton.addActionListener(e -> {
             Item result = items.getSelectedValue();
@@ -47,13 +48,14 @@ public class SearchResultPanel extends JPanel {
     }
 
     public void setItems(Item[] items) {
+        //this.items.add
         //this.items.setListData(items);
-        String[] columnNames = {"Title", "Season", "Episode", "", "", "", "", "", "", ""};
+        /*String[] columnNames = {"Title", "Season", "Episode", "", "", "", "", "", ""};
         DefaultTableModel tableModel = new DefaultTableModel(columnNames, 0);
         for (var item : items) {
             tableModel.addRow(item.toRowArray());
         }
-        table.setModel(tableModel);
+        table.setModel(tableModel);*/
         repaint();
     }
 
