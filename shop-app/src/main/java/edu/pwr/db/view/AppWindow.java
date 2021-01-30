@@ -52,10 +52,6 @@ public class AppWindow extends JFrame {
         productAddPanel = new ProductAddPanel();
         alterOfferPanel = new AlterOfferPanel();
 
-        // tmp, for display check
-        //Item[] list = {new Item(), new Item(), new Item(), new Item()};
-        //searchResultPanel.setItems(list);
-
         tabbedPane.add(searchInputPanel, "Search products");
         tabbedPane.add(searchResultPanel, "Search results");
         tabbedPane.add(invoiceGeneratorPanel, "Create invoice");
@@ -86,7 +82,7 @@ public class AppWindow extends JFrame {
         for (int i = 0; i < list.size(); i++) {
             arr[i] = list.get(i);
         }
-        searchResultPanel.setItems(arr);
+        searchResultPanel.setItems(list);
         tabbedPane.setSelectedComponent(searchResultPanel);
     }
 }

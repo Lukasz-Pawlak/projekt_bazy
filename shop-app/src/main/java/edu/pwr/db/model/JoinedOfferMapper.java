@@ -18,6 +18,7 @@ public class JoinedOfferMapper implements RowMapper<Item> {
         item.setBrand(resultSet.getString("brand"));
         item.setCoverageLevelName(resultSet.getString("coverageLevelName"));
         item.setCoverageLevelNumericValue(resultSet.getInt("coverageLevelNumericValue"));
+        item.setType(resultSet.getString("type"));
         return item;
     }
 
