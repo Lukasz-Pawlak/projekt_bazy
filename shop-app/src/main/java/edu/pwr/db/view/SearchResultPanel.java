@@ -48,6 +48,12 @@ public class SearchResultPanel extends JPanel {
 
     public void setItems(Item[] items) {
         //this.items.setListData(items);
+        String[] columnNames = {"Title", "Season", "Episode", "", "", "", "", "", "", ""};
+        DefaultTableModel tableModel = new DefaultTableModel(columnNames, 0);
+        for (var item : items) {
+            tableModel.addRow(item.toRowArray());
+        }
+        table.setModel(tableModel);
         repaint();
     }
 

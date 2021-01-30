@@ -61,4 +61,19 @@ public class JoinedOfferItem extends Item {
     public void setCoverageLevelNumericValue(int coverageLevelNumericValue) {
         this.coverageLevelNumericValue = coverageLevelNumericValue;
     }
+
+    @Override
+    public Object[] toRowArray() {
+        var row = new Object[9];
+        row[0] = id;
+        row[1] = product;
+        row[2] = pricePerUnit;
+        row[3] = unitsInStock;
+        row[4] = type;
+        row[5] = color;
+        row[6] = brand;
+        row[7] = coverageLevelName;
+        row[8] = coverageLevelNumericValue;
+        return row;
+    }
 }
