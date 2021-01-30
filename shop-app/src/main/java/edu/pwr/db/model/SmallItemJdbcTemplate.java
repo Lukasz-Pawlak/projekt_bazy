@@ -9,7 +9,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class SmallItemJdbcTemplate extends Item {
+public class SmallItemJdbcTemplate {
     protected String tableName;
     protected RowMapper<Item> mapper;
     private JdbcTemplate jdbcTemplate;

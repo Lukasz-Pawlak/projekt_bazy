@@ -121,7 +121,6 @@ public class SearchInputPanel extends JPanel {
             }
         }
         catch (SQLException ex) {
-            // TODO: show error message
             ex.printStackTrace();
         }
     }
