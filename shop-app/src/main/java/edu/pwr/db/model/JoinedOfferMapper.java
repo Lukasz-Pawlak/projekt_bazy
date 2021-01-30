@@ -4,21 +4,21 @@ import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
 
 public class JoinedOfferMapper implements RowMapper<Item> {
     @Override
     public Item mapRow(ResultSet resultSet, int i) throws SQLException {
-        return null;
+        JoinedOfferItem item = new JoinedOfferItem();
+
+        item.setId(resultSet.getInt("offerId"));
+        item.setUnitsInStock(resultSet.getInt("unitsInStock"));
+        item.setPricePerUnit(resultSet.getDouble("pricePerUnit"));
+        item.setProduct(resultSet.getString("product"));
+        item.setColor(resultSet.getString("color"));
+        item.setBrand(resultSet.getString("brand"));
+        item.setCoverageLevelName(resultSet.getString("coverageLevelName"));
+        item.setCoverageLevelNumericValue(resultSet.getInt("coverageLevelNumericValue"));
+        return item;
     }
 
 }
-/*
- "select offer.unitsInStock as unitsInStock, " +
-         "offer.pricePerUnit as pricePerUnit, " +
-         "offer.id as offerId " +
-         "products.name as product, " +
-         "c2.name as color " +
-         "b2.name as brand " +
-         "c3.name as coverageLevelName " +
-         "c3.numericValue as coverageLevelNumericValue " +*/
