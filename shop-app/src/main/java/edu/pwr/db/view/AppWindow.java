@@ -66,7 +66,7 @@ public class AppWindow extends JFrame {
     }
 
     public void start() {
-        new LoginDialog(this); // TODO: uncomment this when started making db logging
+        new LoginDialog(this);
         searchInputPanel.refreshContents(); // this is first load of contents
         setVisible(true);
     }
