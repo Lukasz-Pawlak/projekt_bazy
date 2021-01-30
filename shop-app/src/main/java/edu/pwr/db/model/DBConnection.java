@@ -7,15 +7,11 @@ import java.sql.SQLException;
 public class DBConnection {
     private java.sql.Connection conn;
 
-    public void connect(String userName, String password) {
-        try {
-            if (conn != null) {
-                conn.close();
-            }
-            conn = DataSourceFactory.getMySQLDataSource(userName, password).getConnection();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
+    public void connect(String userName, String password) throws SQLException {
+        if (conn != null) {
+            conn.close();
         }
+        conn = DataSourceFactory.getMySQLDataSource(userName, password).getConnection();
     }
 
     public void close() {
@@ -25,6 +21,10 @@ public class DBConnection {
             throwables.printStackTrace();
         }
         conn = null;
+    }
+
+    public SmallItemJdbcTemplate getSmallItemTemplate(String tableName) throws SQLException {
+        return new SmallItemJdbcTemplate(tableName);
     }
 }
 

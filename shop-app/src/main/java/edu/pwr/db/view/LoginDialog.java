@@ -1,20 +1,21 @@
 package edu.pwr.db.view;
 
+import edu.pwr.db.model.DBConnection;
 import edu.pwr.db.model.Login;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
-// based on: https://www.zentut.com/java-swing/simple-login-dialog/
-// but I changed quite a bit, so idk if I should reference it
 public class LoginDialog extends JDialog {
 
     private final JTextField tfUsername;
     private final JPasswordField pfPassword;
+    private final AppWindow parent;
 
-    public LoginDialog(Frame parent) {
+    public LoginDialog(AppWindow parent) {
         super(parent, true);
+        this.parent = parent;
         setUndecorated(true);
 
         JPanel panel = new JPanel(new GridBagLayout());
@@ -47,8 +48,10 @@ public class LoginDialog extends JDialog {
         JButton btnLogin = new JButton("Login");
 
         btnLogin.addActionListener(e -> {
-            if (Login.authenticate(getUsername(), getPassword())) {
+            DBConnection conn = Login.authenticate(getUsername(), getPassword());
+            if (conn != null) {
                 // TODO: see if here some notification to outside should be made
+                parent.setDbConnection(conn);
                 dispose();
             } else {
                 JOptionPane.showMessageDialog(LoginDialog.this,

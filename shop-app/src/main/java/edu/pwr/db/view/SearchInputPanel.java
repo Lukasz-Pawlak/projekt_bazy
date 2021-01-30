@@ -1,16 +1,21 @@
 package edu.pwr.db.view;
 
 import edu.pwr.db.model.Item;
+import edu.pwr.db.model.SmallItemJdbcTemplate;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.sql.SQLException;
+import java.util.List;
 
 public class SearchInputPanel extends JPanel {
     protected final JComboBox<Item> brands, colors, coverageLevels, types;
     protected final JButton search;
+    protected final AppWindow appWindow;
 
-    public SearchInputPanel() {
+    public SearchInputPanel(AppWindow appWindow) {
+        this.appWindow = appWindow;
         JPanel panel = new JPanel();
         panel.setLayout(new GridBagLayout());
         GridBagConstraints gc = new GridBagConstraints();
@@ -77,5 +82,21 @@ public class SearchInputPanel extends JPanel {
         add(panel, BorderLayout.CENTER);
         //panel.setBackground(Color.BLACK);
         setBorder(new EmptyBorder(40, 40, 50, 50)); // padding
+    }
+
+    public void refreshContents() {
+        try {
+            SmallItemJdbcTemplate template = appWindow.getDbConnection()
+                    .getSmallItemTemplate("color");
+            List<Item> list = template.list();
+            colors.removeAllItems();
+            colors.addItem(Item.ANY);
+            for (Item item : list) {
+                colors.addItem(item);
+            }
+        }
+        catch (SQLException ex) {
+            // TODO: show error message
+        }
     }
 }

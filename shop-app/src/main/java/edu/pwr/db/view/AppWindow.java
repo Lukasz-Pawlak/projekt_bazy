@@ -1,5 +1,6 @@
 package edu.pwr.db.view;
 
+import edu.pwr.db.model.DBConnection;
 import edu.pwr.db.model.Item;
 
 import javax.swing.*;
@@ -19,6 +20,7 @@ public class AppWindow extends JFrame {
     private final CustomerAddPanel customerAddPanel;
     private final ProductAddPanel productAddPanel;
     private final AlterOfferPanel alterOfferPanel;
+    private DBConnection dbConnection;
 
     private final JTabbedPane tabbedPane;
 
@@ -43,15 +45,15 @@ public class AppWindow extends JFrame {
         });
 
         searchResultPanel = new SearchResultPanel();
-        searchInputPanel = new SearchInputPanel();
+        searchInputPanel = new SearchInputPanel(this);
         invoiceGeneratorPanel = new InvoiceGeneratorPanel();
         customerAddPanel = new CustomerAddPanel();
         productAddPanel = new ProductAddPanel();
         alterOfferPanel = new AlterOfferPanel();
 
         // tmp, for display check
-        Item[] list = {new Item(), new Item(), new Item(), new Item()};
-        searchResultPanel.setItems(list);
+        //Item[] list = {new Item(), new Item(), new Item(), new Item()};
+        //searchResultPanel.setItems(list);
 
         tabbedPane.add(searchInputPanel, "Search products");
         tabbedPane.add(searchResultPanel, "Search results");
@@ -64,8 +66,16 @@ public class AppWindow extends JFrame {
     }
 
     public void start() {
-        //new LoginDialog(this); // TODO: uncomment this when started making db logging
+        new LoginDialog(this); // TODO: uncomment this when started making db logging
+        searchInputPanel.refreshContents(); // this is first load of contents
         setVisible(true);
+    }
+
+    public void setDbConnection(DBConnection connection) {
+        this.dbConnection = connection;
+    }
+    public DBConnection getDbConnection() {
+        return dbConnection;
     }
 
     public void showSelection(List<Item> list) {
