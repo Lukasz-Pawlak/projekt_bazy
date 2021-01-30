@@ -1,5 +1,6 @@
 package edu.pwr.db.view;
 
+import edu.pwr.db.model.DBConnection;
 import edu.pwr.db.model.Item;
 import edu.pwr.db.model.SmallItemJdbcTemplate;
 
@@ -86,17 +87,35 @@ public class SearchInputPanel extends JPanel {
 
     public void refreshContents() {
         try {
-            SmallItemJdbcTemplate template = appWindow.getDbConnection()
-                    .getSmallItemTemplate("color");
-            List<Item> list = template.list();
+            DBConnection connection = appWindow.getDbConnection();
+            SmallItemJdbcTemplate template;
+            List<Item> list;
+
+            template = connection.getSmallItemTemplate("colors");
+            list = template.list();
             colors.removeAllItems();
             colors.addItem(Item.ANY);
             for (Item item : list) {
                 colors.addItem(item);
             }
+            template = connection.getSmallItemTemplate("brands");
+            list = template.list();
+            brands.removeAllItems();
+            brands.addItem(Item.ANY);
+            for (Item item : list) {
+                brands.addItem(item);
+            }
+            template = connection.getSmallItemTemplate("types");
+            list = template.list();
+            types.removeAllItems();
+            types.addItem(Item.ANY);
+            for (Item item : list) {
+                types.addItem(item);
+            }
         }
         catch (SQLException ex) {
             // TODO: show error message
+            ex.printStackTrace();
         }
     }
 }
