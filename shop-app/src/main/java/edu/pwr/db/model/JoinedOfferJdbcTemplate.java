@@ -30,7 +30,8 @@ public class JoinedOfferJdbcTemplate {
                         "c2.name as color, " +
                         "b2.name as brand, " +
                         "c3.name as coverageLevelName, " +
-                        "c3.numericValue as coverageLevelNumericValue " +
+                        "c3.numericValue as coverageLevelNumericValue, " +
+                        "t2.name as type " +
                         "from offer " +
                         "inner join Products on offer.product = products.id " +
                         "inner join brands b2 on products.brand = b2.id " +

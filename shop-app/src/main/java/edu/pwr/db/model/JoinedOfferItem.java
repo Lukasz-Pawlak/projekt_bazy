@@ -2,10 +2,15 @@ package edu.pwr.db.model;
 
 public class JoinedOfferItem extends Item {
     private int id;
-    private double pricePerUnit; // TODO: check if it is ok to use double when mapping from decimal
-    private int unitsInStock;
-    private String color, brand, type, coverageLevelName, product;
-    private int coverageLevelNumericValue;
+    protected double pricePerUnit; // TODO: check if it is ok to use double when mapping from decimal
+    protected int unitsInStock;
+    protected String color, brand, type, coverageLevelName, product;
+    protected int coverageLevelNumericValue;
+
+    @Override
+    public String toString() {
+        return product + " | color: " + color + " | brand: " + brand + " | " + type + " || " ;//+ String.format("%2lf", pricePerUnit);
+    }
 
     public int getId() {
         return id;
@@ -60,20 +65,5 @@ public class JoinedOfferItem extends Item {
     }
     public void setCoverageLevelNumericValue(int coverageLevelNumericValue) {
         this.coverageLevelNumericValue = coverageLevelNumericValue;
-    }
-
-    @Override
-    public Object[] toRowArray() {
-        var row = new Object[9];
-        row[0] = id;
-        row[1] = product;
-        row[2] = pricePerUnit;
-        row[3] = unitsInStock;
-        row[4] = type;
-        row[5] = color;
-        row[6] = brand;
-        row[7] = coverageLevelName;
-        row[8] = coverageLevelNumericValue;
-        return row;
     }
 }
