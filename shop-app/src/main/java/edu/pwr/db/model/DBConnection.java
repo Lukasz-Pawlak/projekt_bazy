@@ -5,14 +5,26 @@ import javax.sql.DataSource;
 import java.sql.SQLException;
 
 public class DBConnection {
-    private static java.sql.Connection conn;
+    private java.sql.Connection conn;
 
-    public static void connect(String userName, String password) {
+    public void connect(String userName, String password) {
         try {
+            if (conn != null) {
+                conn.close();
+            }
             conn = DataSourceFactory.getMySQLDataSource(userName, password).getConnection();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
+    }
+
+    public void close() {
+        try {
+            conn.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        conn = null;
     }
 }
 
