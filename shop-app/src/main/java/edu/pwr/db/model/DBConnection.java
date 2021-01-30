@@ -30,6 +30,12 @@ public class DBConnection {
         r.setDataSource(dataSource);
         return r;
     }
+
+    public CoverageLevelJdbcTemplate getCoverageLevelTemplate() throws SQLException {
+        var r = new CoverageLevelJdbcTemplate();
+        r.setDataSource(dataSource);
+        return r;
+    }
 }
 
 class DataSourceFactory {

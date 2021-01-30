@@ -112,6 +112,13 @@ public class SearchInputPanel extends JPanel {
             for (Item item : list) {
                 types.addItem(item);
             }
+            var coverageTemplate = connection.getCoverageLevelTemplate();
+            list = coverageTemplate.list();
+            coverageLevels.removeAllItems();
+            coverageLevels.addItem(Item.ANY);
+            for (Item item : list) {
+                coverageLevels.addItem(item);
+            }
         }
         catch (SQLException ex) {
             // TODO: show error message
