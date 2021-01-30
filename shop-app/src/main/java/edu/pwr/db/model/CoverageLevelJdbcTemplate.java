@@ -7,7 +7,7 @@ import javax.sql.DataSource;
 import java.sql.SQLException;
 import java.util.List;
 
-public class CoverageLevelJdbcTemplate extends Item {
+public class CoverageLevelJdbcTemplate {
     protected RowMapper<Item> mapper;
     private JdbcTemplate jdbcTemplate;
 

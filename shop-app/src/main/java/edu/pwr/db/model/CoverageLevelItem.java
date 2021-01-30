@@ -29,4 +29,13 @@ public class CoverageLevelItem extends Item {
     public String toString() {
         return name + " (" + numericValue + ")";
     }
+
+    @Override
+    public Object[] toRowArray() {
+        var row = new Object[3];
+        row[0] = id;
+        row[1] = name;
+        row[2] = numericValue;
+        return row;
+    }
 }

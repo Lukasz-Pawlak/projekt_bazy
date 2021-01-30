@@ -2,6 +2,7 @@ package edu.pwr.db.view;
 
 import edu.pwr.db.model.DBConnection;
 import edu.pwr.db.model.Item;
+import edu.pwr.db.model.JoinedOfferJdbcTemplate;
 
 import javax.swing.*;
 import javax.swing.plaf.metal.MetalTabbedPaneUI;
@@ -78,7 +79,14 @@ public class AppWindow extends JFrame {
         return dbConnection;
     }
 
-    public void showSelection(List<Item> list) {
-
+    public void searchBy(Item brand, Item color, Item coverageLevel, Item type) {
+        var template = dbConnection.getJoinedOfferTemplate();
+        var list = template.list(brand, color, coverageLevel, type);
+        var arr = new Item[list.size()];
+        for (int i = 0; i < list.size(); i++) {
+            arr[i] = list.get(i);
+        }
+        searchResultPanel.setItems(arr);
+        tabbedPane.setSelectedComponent(searchResultPanel);
     }
 }

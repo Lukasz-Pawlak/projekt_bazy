@@ -22,4 +22,12 @@ public class SmallItem extends Item {
     public String toString() {
         return name;
     }
+
+    @Override
+    public Object[] toRowArray() {
+        var row = new Object[2];
+        row[0] = id;
+        row[1] = name;
+        return row;
+    }
 }

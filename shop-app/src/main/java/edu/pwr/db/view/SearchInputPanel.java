@@ -79,6 +79,14 @@ public class SearchInputPanel extends JPanel {
         gc.anchor = GridBagConstraints.NORTH;
         panel.add(search, gc);
 
+        search.addActionListener(e -> {
+            appWindow.searchBy(
+                    (Item) brands.getSelectedItem(),
+                    (Item) colors.getSelectedItem(),
+                    (Item) coverageLevels.getSelectedItem(),
+                    (Item) types.getSelectedItem());
+        });
+
         setLayout(new BorderLayout());
         add(panel, BorderLayout.CENTER);
         //panel.setBackground(Color.BLACK);

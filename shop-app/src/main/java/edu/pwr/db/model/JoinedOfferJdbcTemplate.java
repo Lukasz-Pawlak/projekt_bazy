@@ -1,5 +1,6 @@
 package edu.pwr.db.model;
 
+import edu.pwr.db.Logger;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
@@ -24,11 +25,11 @@ public class JoinedOfferJdbcTemplate {
         String SQL =
                 "select offer.unitsInStock as unitsInStock, " +
                         "offer.pricePerUnit as pricePerUnit, " +
-                        "offer.id as offerId " +
+                        "offer.id as offerId, " +
                         "products.name as product, " +
-                        "c2.name as color " +
-                        "b2.name as brand " +
-                        "c3.name as coverageLevelName " +
+                        "c2.name as color, " +
+                        "b2.name as brand, " +
+                        "c3.name as coverageLevelName, " +
                         "c3.numericValue as coverageLevelNumericValue " +
                         "from offer " +
                         "inner join Products on offer.product = products.id " +
@@ -75,6 +76,9 @@ public class JoinedOfferJdbcTemplate {
             SQL += "c2.id = ? ";
             args.add(((SmallItem) color).id);
         }
+        SQL += ";"; // nwm XD
+
+        Logger.debug(SQL);
 
         return jdbcTemplate.query(SQL, mapper, args.toArray());
     }

@@ -36,6 +36,12 @@ public class DBConnection {
         r.setDataSource(dataSource);
         return r;
     }
+
+    public JoinedOfferJdbcTemplate getJoinedOfferTemplate() {
+        var r = new JoinedOfferJdbcTemplate();
+        r.setDataSource(dataSource);
+        return r;
+    }
 }
 
 class DataSourceFactory {
