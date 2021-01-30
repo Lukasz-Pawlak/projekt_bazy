@@ -49,7 +49,7 @@ public class AppWindow extends JFrame {
         searchInputPanel = new SearchInputPanel(this);
         invoiceGeneratorPanel = new InvoiceGeneratorPanel();
         customerAddPanel = new CustomerAddPanel();
-        productAddPanel = new ProductAddPanel();
+        productAddPanel = new ProductAddPanel(this);
         alterOfferPanel = new AlterOfferPanel();
 
         tabbedPane.add(searchInputPanel, "Search products");
@@ -65,6 +65,7 @@ public class AppWindow extends JFrame {
     public void start() {
         new LoginDialog(this);
         searchInputPanel.refreshContents(); // this is first load of contents
+        productAddPanel.refreshContents();
         setVisible(true);
     }
 
