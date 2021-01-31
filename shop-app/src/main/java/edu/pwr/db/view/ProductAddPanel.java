@@ -1,11 +1,13 @@
 package edu.pwr.db.view;
 
+import com.mysql.jdbc.Connection;
 import edu.pwr.db.Logger;
 import edu.pwr.db.model.*;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.sql.CallableStatement;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -187,12 +189,9 @@ public class ProductAddPanel extends JPanel {
                 }
 
                 name = inputName.getText();
+                addProduct(brand,color,coverageName,coverageValue,type,name);
 
-                // TODO: SQL stuff, remove 2 below lines
-                Logger.debug(brand + color + coverageName + coverageValue + type + name);
-                throw new SQLException();
-
-            } catch (SQLException | NumberFormatException ex) {
+            } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(appWindow, "Wrong input", "Warning", JOptionPane.ERROR_MESSAGE);
             }
         });
@@ -240,5 +239,23 @@ public class ProductAddPanel extends JPanel {
         catch (SQLException ex) {
             ex.printStackTrace();
         }
+    }
+
+    public void addProduct(String brand, String color, String coverageName, int coverageValue, String type, String name){
+        CallableStatement callableStatement;
+        try {Connection conn = (Connection) appWindow.getDbConnection().getConn();
+        String SQL = "{CALL addProduct(?,?,?,?,?,?)}";
+            callableStatement = conn.prepareCall(SQL);
+            callableStatement.setString(1, brand);
+            callableStatement.setString(2,color);
+            callableStatement.setString(3,coverageName);
+            callableStatement.setInt(4,coverageValue);
+            callableStatement.setString(5,type);
+            callableStatement.setString(6,name);
+            callableStatement.executeQuery();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
     }
 }
