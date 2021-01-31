@@ -1,7 +1,7 @@
 use shop;
 delimiter $$
 drop function if exists  addInvoice $$
-create function addInvoice(cl int) returns INT deterministic
+create procedure addInvoice(IN cl INT, OUT fv INT)
 begin
     declare date DATETIME;
     declare result int;
@@ -9,7 +9,7 @@ begin
     insert into invoices (dateIssued,CLIENT,confirmed)
     VALUES (@date,cl,false);
     SET @result=(select id from invoices where client=cl and dateIssued=@date);
-    RETURN @result;
+    SELECT @result INTO fv;
 end $$
 delimiter ;
 

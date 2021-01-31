@@ -1,6 +1,8 @@
 package edu.pwr.db.model;
 
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
+import org.springframework.jdbc.core.JdbcTemplate;
+
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -56,6 +58,14 @@ public class DBConnection {
 
     public ClientJdbcTemplate getClientTemplate() throws SQLException {
         var r = new ClientJdbcTemplate();
+        r.setDataSource(dataSource);
+        return r;
+    }
+    public DataSource getDataSource(){
+        return dataSource;
+    }
+    public JdbcTemplate getJDBCTemplate(){
+        var r = new JdbcTemplate();
         r.setDataSource(dataSource);
         return r;
     }
