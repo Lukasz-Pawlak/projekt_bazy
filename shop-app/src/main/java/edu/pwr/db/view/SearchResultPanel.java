@@ -1,5 +1,6 @@
 package edu.pwr.db.view;
 
+import edu.pwr.db.Logger;
 import edu.pwr.db.model.ClientItem;
 import edu.pwr.db.model.Item;
 import edu.pwr.db.model.JoinedOfferItem;
@@ -31,6 +32,7 @@ public class SearchResultPanel extends JPanel {
                         break;
                     case INVOICE_LINE:
                         appWindow.setInvoiceOffer((JoinedOfferItem) result);
+                        Logger.debug("invoice line");
                         break;
                     default:
 

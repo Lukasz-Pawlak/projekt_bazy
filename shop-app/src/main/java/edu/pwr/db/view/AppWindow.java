@@ -1,5 +1,6 @@
 package edu.pwr.db.view;
 
+import edu.pwr.db.Logger;
 import edu.pwr.db.model.*;
 
 import javax.swing.*;
@@ -11,6 +12,7 @@ import java.util.List;
 // let's make this class controller also
 public class AppWindow extends JFrame {
     private State state = State.NONE;
+    private final JTextArea hintText;
 
     void resetState() {
         state = State.NONE;
@@ -43,8 +45,9 @@ public class AppWindow extends JFrame {
     void setInvoiceClient(ClientItem client) {
         invoiceGeneratorPanel.setClient(client);
         state = state.next();
-        JOptionPane.showMessageDialog(this, "select offers",
-                "info", JOptionPane.INFORMATION_MESSAGE);
+        //JOptionPane.showMessageDialog(this, "select offers",
+        //        "info", JOptionPane.INFORMATION_MESSAGE);
+        this.showHintText("");
         tabbedPane.setSelectedComponent(searchInputPanel);
     }
 
@@ -62,8 +65,16 @@ public class AppWindow extends JFrame {
 
     private final JTabbedPane tabbedPane;
 
+    void showHintText(String text) {
+        hintText.setText(text);
+    }
+
     public AppWindow() {
         super("shop-app");
+        hintText = new JTextArea();
+        hintText.setEditable(false);
+        hintText.setBackground(Color.LIGHT_GRAY);
+
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         int halfInitialWidth = 360, halfInitialHeight = 280;
@@ -96,7 +107,8 @@ public class AppWindow extends JFrame {
         tabbedPane.add(productAddPanel, "Add product");
         tabbedPane.add(alterOfferPanel, "Change offer");
 
-        add(tabbedPane);
+        add(tabbedPane, BorderLayout.CENTER);
+        add(hintText, BorderLayout.NORTH);
     }
 
     public void start() {
@@ -137,10 +149,12 @@ enum State {
     OFFER_PRODUCT;
 
     public State next() {
+        Logger.debug("state changing from: " + this.toString());
         switch (this) {
-            case NONE: return NONE;
-            case INVOICE_LINE: return NONE;
-            case OFFER_PRODUCT: return NONE;
+            case NONE:
+            case INVOICE_LINE:
+            case OFFER_PRODUCT:
+                return NONE;
             case INVOICE_CLIENT: return INVOICE_LINE;
             default: return null;
         }

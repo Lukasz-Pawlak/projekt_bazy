@@ -1,5 +1,6 @@
 package edu.pwr.db.view;
 
+import edu.pwr.db.Logger;
 import edu.pwr.db.model.DBConnection;
 import edu.pwr.db.model.Item;
 import edu.pwr.db.model.SmallItemJdbcTemplate;
@@ -85,6 +86,7 @@ public class SearchInputPanel extends JPanel {
                     (Item) colors.getSelectedItem(),
                     (Item) coverageLevels.getSelectedItem(),
                     (Item) types.getSelectedItem());
+            Logger.debug("(input) state: " + appWindow.getCurrentState());
         });
 
         setLayout(new BorderLayout());

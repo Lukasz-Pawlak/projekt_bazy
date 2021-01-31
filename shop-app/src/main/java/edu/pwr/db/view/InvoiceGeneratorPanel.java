@@ -10,12 +10,14 @@ import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.SQLException;
 
 public class InvoiceGeneratorPanel extends JPanel {
     private final JButton newInvoice;
     private final JButton addOffer;
     private final JButton endCreation;
     private final JButton cancelCreation;
+    private final JButton okButton;
     private final JTextArea unitsCountInput;
     private final JTextArea alreadyCreatedView;
     private final JTextArea selectedOfferInfo;
@@ -33,6 +35,7 @@ public class InvoiceGeneratorPanel extends JPanel {
         addOffer = new JButton("add entry");
         endCreation = new JButton("confirm");
         cancelCreation = new JButton("cancel");
+        okButton = new JButton("OK");
         unitsCountInput = new JTextAreaWithPlaceholder("units");
         alreadyCreatedView = new JTextArea();
         selectedOfferInfo = new JTextArea();
@@ -56,6 +59,26 @@ public class InvoiceGeneratorPanel extends JPanel {
 
         addOffer.addActionListener(e -> {
             appWindow.showSearchPanel();
+        });
+
+        okButton.addActionListener(e -> {
+            if (currentOffer != null) {
+
+                try {
+                    int amount = Integer.parseInt(unitsCountInput.getText());
+                    // TODO: SQL stuff [adding entry to invoiceLine], delete line 'throw new .."
+
+                    // TODO: disable & enable buttons (also in latter listeners)
+
+                    // TODO: make prettier display of added line
+                    alreadyCreatedView.setText(
+                            alreadyCreatedView.getText() + "\n" + currentOffer);
+                    throw new SQLException();
+                }
+                catch (NumberFormatException | SQLException ex) {
+                    JOptionPane.showMessageDialog(appWindow, "bad input","error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
         });
 
         endCreation.addActionListener(e -> {
@@ -89,16 +112,19 @@ public class InvoiceGeneratorPanel extends JPanel {
         panel.add(alreadyCreatedView, gc);
 
         gc.gridy++;
-        gc.gridwidth = 3;
+        gc.gridwidth = 2;
         gc.weighty = 0.5;
         panel.add(selectedOfferInfo, gc);
 
-        gc.gridx += 3;
+        gc.gridwidth = 1;
+        gc.gridx += 2;
         gc.weightx = 1;
         panel.add(unitsCountInput, gc);
 
         gc.fill = GridBagConstraints.NONE;
-        gc.gridwidth = 1;
+        gc.gridx++;
+        panel.add(okButton, gc);
+
         gc.weighty = 1;
 
         gc.gridx = 0;
@@ -130,6 +156,6 @@ public class InvoiceGeneratorPanel extends JPanel {
         // TODO: here insert into invoices new entry based on client got
         //  also set internal invoice id
         invoiceID = -1;
-        appWindow.nextState(); // next state is INVOICE_LINE, where we will be getting offers
+        //appWindow.nextState(); // next state is INVOICE_LINE, where we will be getting offers, but appWindow sets it by itself
     }
 }
