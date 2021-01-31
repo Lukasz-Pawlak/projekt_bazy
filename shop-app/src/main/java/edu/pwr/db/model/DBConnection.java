@@ -26,6 +26,12 @@ public class DBConnection {
         conn = null;
     }
 
+    public JoinedProductJdbcTemplate getJoinedProductTemplate() {
+        var r = new JoinedProductJdbcTemplate();
+        r.setDataSource(dataSource);
+        return r;
+    }
+
     public SmallItemJdbcTemplate getSmallItemTemplate(String tableName) throws SQLException {
         var r = new SmallItemJdbcTemplate(tableName);
         r.setDataSource(dataSource);

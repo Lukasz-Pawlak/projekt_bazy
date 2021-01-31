@@ -1,24 +1,68 @@
 package edu.pwr.db.view;
 
+import edu.pwr.db.model.JoinedOfferItem;
+import edu.pwr.db.model.JoinedProductItem;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
 public class AlterOfferPanel extends JPanel {
-    private final JButton removeOffer, addOffer, updateOffer, select;
+    private final JButton removeOffer, addOffer, updateOffer, select, cancel;
     private final JTextArea amount, price, productDescription;
     private final AppWindow appWindow;
+    private JoinedOfferItem offer;
+    private JoinedProductItem product;
 
     public AlterOfferPanel(AppWindow appWindow) {
         this.appWindow = appWindow;
-        updateOffer = new JButton("update offer");
-        select = new JButton("choose product");
+        updateOffer = new JButton("update");
+        select = new JButton("load offer");
         removeOffer = new JButton("remove offer");
         addOffer = new JButton("add offer");
+        cancel = new JButton("cancel");
         amount = new JTextAreaWithPlaceholder("in stock");
         price = new JTextAreaWithPlaceholder("price per unit");
         productDescription = new JTextArea();
         productDescription.setEditable(false);
+
+        select.addActionListener(e -> {
+            appWindow.chooseOfferToAlter();
+        });
+
+        cancel.addActionListener(e -> {
+            offer = null;
+            amount.setText("");
+            price.setText("");
+            productDescription.setText("");
+            appWindow.resetState();
+            repaint();
+        });
+
+        removeOffer.addActionListener(e -> {
+            // TODO: SQL remove offer of id
+            offer.getId();
+        });
+
+        addOffer.addActionListener(e -> {
+            // TODO: productItem objects
+            appWindow.addOfferQuery();
+        });
+
+        updateOffer.addActionListener(e -> {
+            try {
+                int amount = Integer.parseInt(this.amount.getText());
+                double price = Double.parseDouble(this.price.getText());
+                // TODO: SQL, probably add SQLEException catch down here vv
+            }
+            catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(appWindow,
+                        "incorrect input", "error", JOptionPane.ERROR_MESSAGE);
+                ex.printStackTrace();
+            }
+        });
+
+
 
         setLayout(new GridBagLayout());
         var gc = new GridBagConstraints();
@@ -41,7 +85,17 @@ public class AlterOfferPanel extends JPanel {
         panel2.add(amount);
         panel2.add(price);
         JPanel holder1 = new JPanel();
-        holder1.add(updateOffer);
+        holder1.setLayout(new GridBagLayout());
+        var gc2 = new GridBagConstraints();
+        gc2.insets = gc.insets;
+        gc2.gridx = 0;
+        gc2.gridy = 0;
+        gc2.gridwidth = 1;
+        gc2.gridheight = 1;
+        gc2.weightx = gc2.weighty = 0;
+        holder1.add(updateOffer, gc2);
+        gc2.gridy++;
+        holder1.add(cancel, gc2);
         panel2.add(holder1);
         add(panel2, gc);
 
@@ -58,5 +112,22 @@ public class AlterOfferPanel extends JPanel {
         add(addOffer, gc);
 
         setBorder(new EmptyBorder(20, 20, 30, 30));
+    }
+
+    public void setOffer(JoinedOfferItem item) {
+        this.offer = item;
+        amount.setText(Integer.toString(item.getUnitsInStock()));
+        price.setText(Double.toString(item.getPricePerUnit()));
+        // TODO perhaps prettier display here, since we have access to all fields n stuff
+        productDescription.setText(item.toString());
+        repaint();
+    }
+
+    public void setProduct(JoinedProductItem product) {
+        this.product = product;
+        amount.setText("");
+        price.setText("");
+        productDescription.setText(product.toString());
+        repaint();
     }
 }

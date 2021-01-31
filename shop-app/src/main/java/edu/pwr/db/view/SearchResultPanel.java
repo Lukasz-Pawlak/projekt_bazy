@@ -4,6 +4,7 @@ import edu.pwr.db.Logger;
 import edu.pwr.db.model.ClientItem;
 import edu.pwr.db.model.Item;
 import edu.pwr.db.model.JoinedOfferItem;
+import edu.pwr.db.model.JoinedProductItem;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -33,6 +34,12 @@ public class SearchResultPanel extends JPanel {
                     case INVOICE_LINE:
                         appWindow.setInvoiceOffer((JoinedOfferItem) result);
                         Logger.debug("invoice line");
+                        break;
+                    case OFFER_ALTER:
+                        appWindow.setAlterOffer((JoinedOfferItem) result);
+                        break;
+                    case PRODUCT_OFFER_ALTER:
+                        appWindow.setAddProduct((JoinedProductItem) result);
                         break;
                     default:
 

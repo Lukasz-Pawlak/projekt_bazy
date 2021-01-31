@@ -38,6 +38,15 @@ public class AppWindow extends JFrame {
         }
     }
 
+    void chooseOfferToAlter() {
+        state = State.OFFER_ALTER;
+        var template = dbConnection.getJoinedOfferTemplate();
+        Item i = Item.ANY;
+        var list = template.list(i, i, i, i);
+        searchResultPanel.setItems(list);
+        tabbedPane.setSelectedComponent(searchInputPanel);
+    }
+
     void showSearchPanel() {
         tabbedPane.setSelectedComponent(searchInputPanel);
     }
@@ -140,20 +149,42 @@ public class AppWindow extends JFrame {
         invoiceGeneratorPanel.setOffer(result);
         tabbedPane.setSelectedComponent(invoiceGeneratorPanel);
     }
+
+    public void setAlterOffer(JoinedOfferItem item) {
+        alterOfferPanel.setOffer(item);
+        tabbedPane.setSelectedComponent(alterOfferPanel);
+    }
+
+    public void addOfferQuery() {
+        state = State.PRODUCT_OFFER_ALTER;
+        var template = dbConnection.getJoinedProductTemplate();
+        Item i = Item.ANY;
+        var list = template.list(i, i, i, i);
+        searchResultPanel.setItems(list);
+        tabbedPane.setSelectedComponent(searchInputPanel);
+    }
+
+    public void setAddProduct(JoinedProductItem result) {
+        alterOfferPanel.setProduct(result);
+        tabbedPane.setSelectedComponent(alterOfferPanel);
+    }
 }
 
+// this enum helps to determine what is being selected in searchResult and what to do about it
 enum State {
     NONE,
     INVOICE_CLIENT,
     INVOICE_LINE,
-    OFFER_PRODUCT;
+    OFFER_ALTER,
+    PRODUCT_OFFER_ALTER;
 
     public State next() {
         Logger.debug("state changing from: " + this.toString());
         switch (this) {
             case NONE:
             case INVOICE_LINE:
-            case OFFER_PRODUCT:
+            case PRODUCT_OFFER_ALTER:
+            case OFFER_ALTER:
                 return NONE;
             case INVOICE_CLIENT: return INVOICE_LINE;
             default: return null;
