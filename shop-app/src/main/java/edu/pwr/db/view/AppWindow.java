@@ -9,11 +9,12 @@ import java.awt.*;
 import java.sql.SQLException;
 import java.util.List;
 
+import static java.lang.Thread.sleep;
+
 // let's make this class controller also
 public class AppWindow extends JFrame {
     private State state = State.NONE;
     private final JTextArea hintText;
-    private LoginDialog loginDialog;
 
     void resetState() {
         state = State.NONE;
@@ -116,20 +117,21 @@ public class AppWindow extends JFrame {
     }
 
     public void start() {
-        loginDialog=new LoginDialog(this);
+        new LoginDialog(this);
         searchInputPanel.refreshContents(); // this is first load of contents
         productAddPanel.refreshContents();
         tabbedPane.add(searchInputPanel, "Search products");
         tabbedPane.add(searchResultPanel, "Search results");
         tabbedPane.add(invoiceGeneratorPanel, "Create invoice");
         tabbedPane.add(customerAddPanel, "Add customer");
-        if(!"root".equals(loginDialog.getUsername())); //
-        {   System.out.println("rooooooooooooooooooot/");
+        Logger.debug(Login.getUsername()+ "++");
+        if(!Login.getUsername().equals("root")) {
+            Logger.debug("rooooooooooooooooooot/");
             tabbedPane.add(productAddPanel, "Add product");
             tabbedPane.add(alterOfferPanel, "Change offer");
         }
-        if(loginDialog.getUsername()!="admin");
-        tabbedPane.add(adminPanel, "backups");
+        if(!Login.getUsername().equals("admin"))
+            tabbedPane.add(adminPanel, "backups");
         setVisible(true);
     }
 
