@@ -2,6 +2,7 @@ package edu.pwr.db.model;
 
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 import javax.sql.DataSource;
+import java.sql.Connection;
 import java.sql.SQLException;
 
 public class DBConnection {
@@ -29,6 +30,10 @@ public class DBConnection {
         var r = new SmallItemJdbcTemplate(tableName);
         r.setDataSource(dataSource);
         return r;
+    }
+
+    public Connection getConn() {
+        return conn;
     }
 
     public CoverageLevelJdbcTemplate getCoverageLevelTemplate() throws SQLException {

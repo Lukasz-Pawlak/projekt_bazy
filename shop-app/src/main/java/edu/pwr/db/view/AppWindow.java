@@ -48,7 +48,7 @@ public class AppWindow extends JFrame {
         searchResultPanel = new SearchResultPanel();
         searchInputPanel = new SearchInputPanel(this);
         invoiceGeneratorPanel = new InvoiceGeneratorPanel();
-        customerAddPanel = new CustomerAddPanel();
+        customerAddPanel = new CustomerAddPanel(this);
         productAddPanel = new ProductAddPanel(this);
         alterOfferPanel = new AlterOfferPanel(this);
 
