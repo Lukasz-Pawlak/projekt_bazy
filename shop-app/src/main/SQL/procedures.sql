@@ -1,7 +1,7 @@
 use shop;
 delimiter $$
 drop procedure if exists addProduct $$
-create procedure addProduct(in c varchar(30), in b varchar(30), in cLn varchar(30), in cLv int, in t varchar(20), in n varchar(100),IN price DECIMAL(5,2),IN units INT)
+create procedure addProduct(in c varchar(30), in b varchar(30), in cLn varchar(30), in cLv int, in t varchar(20), in n varchar(100))
 begin
 declare ci, bi, cLi, ti, pom int;
 	if c not in (select name from Colors) then
@@ -31,9 +31,6 @@ declare ci, bi, cLi, ti, pom int;
     else
 	    insert into Products (color,brand,coverageLevel,TYPE,name)
         values(ci, bi, cLi, ti,n);
-        SELECT id FROM products WHERE color=ci AND brand=bi AND coverageLevel=cLi AND TYPE=ti INTO pom;
-        INSERT INTO offer(pricePerUnit,unitsInStock,product)
-        VALUES(price,units,pom);
 	end if;
 end; $$
 delimiter ;
