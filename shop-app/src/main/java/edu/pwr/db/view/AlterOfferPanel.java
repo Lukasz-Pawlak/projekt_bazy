@@ -19,7 +19,7 @@ public class AlterOfferPanel extends JPanel {
         updateOffer = new JButton("update");
         select = new JButton("load offer");
         removeOffer = new JButton("remove offer");
-        addOffer = new JButton("add offer");
+        addOffer = new JButton("new offer");
         cancel = new JButton("cancel");
         amount = new JTextAreaWithPlaceholder("in stock");
         price = new JTextAreaWithPlaceholder("price per unit");
@@ -28,10 +28,13 @@ public class AlterOfferPanel extends JPanel {
 
         select.addActionListener(e -> {
             appWindow.chooseOfferToAlter();
+            updateOffer.setText("update");
+            updateOffer.addActionListener(f -> updateOfferVariant());
         });
 
         cancel.addActionListener(e -> {
             offer = null;
+            product = null;
             amount.setText("");
             price.setText("");
             productDescription.setText("");
@@ -45,23 +48,10 @@ public class AlterOfferPanel extends JPanel {
         });
 
         addOffer.addActionListener(e -> {
-            // TODO: productItem objects
+            updateOffer.setText("create");
+            updateOffer.addActionListener(f -> addOfferVariant());
             appWindow.addOfferQuery();
         });
-
-        updateOffer.addActionListener(e -> {
-            try {
-                int amount = Integer.parseInt(this.amount.getText());
-                double price = Double.parseDouble(this.price.getText());
-                // TODO: SQL, probably add SQLEException catch down here vv
-            }
-            catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(appWindow,
-                        "incorrect input", "error", JOptionPane.ERROR_MESSAGE);
-                ex.printStackTrace();
-            }
-        });
-
 
 
         setLayout(new GridBagLayout());
@@ -112,6 +102,32 @@ public class AlterOfferPanel extends JPanel {
         add(addOffer, gc);
 
         setBorder(new EmptyBorder(20, 20, 30, 30));
+    }
+
+    private void addOfferVariant() {
+        try {
+            int amount = Integer.parseInt(this.amount.getText());
+            double price = Double.parseDouble(this.price.getText());
+            // TODO: SQL, probably add SQLException catch down here vv
+        }
+        catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(appWindow,
+                    "incorrect input", "error", JOptionPane.ERROR_MESSAGE);
+            ex.printStackTrace();
+        }
+    }
+
+    private void updateOfferVariant() {
+        try {
+            int amount = Integer.parseInt(this.amount.getText());
+            double price = Double.parseDouble(this.price.getText());
+            // TODO: SQL, probably add SQLException catch down here vv
+        }
+        catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(appWindow,
+                    "incorrect input", "error", JOptionPane.ERROR_MESSAGE);
+            ex.printStackTrace();
+        }
     }
 
     public void setOffer(JoinedOfferItem item) {

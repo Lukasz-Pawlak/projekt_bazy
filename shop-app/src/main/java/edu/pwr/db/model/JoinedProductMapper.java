@@ -10,7 +10,7 @@ public class JoinedProductMapper implements RowMapper<Item> {
     public Item mapRow(ResultSet resultSet, int i) throws SQLException {
         JoinedProductItem item = new JoinedProductItem();
 
-        item.setId(resultSet.getInt("product"));
+        item.setId(resultSet.getInt("productId"));
         item.setProductName(resultSet.getString("product"));
         item.setBrand(resultSet.getString("brand"));
         item.setCoverageLevelName(resultSet.getString("coverageLevelName"));
