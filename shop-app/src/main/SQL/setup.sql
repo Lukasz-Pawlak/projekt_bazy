@@ -66,6 +66,7 @@ create table Invoices (
     id int primary key auto_increment,
     dateIssued date,
     client int,
+    confirmed boolean default false,
 
     foreign key (client) references Clients(id)
 );

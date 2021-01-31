@@ -70,6 +70,7 @@ public class AppWindow extends JFrame {
     private final CustomerAddPanel customerAddPanel;
     private final ProductAddPanel productAddPanel;
     private final AlterOfferPanel alterOfferPanel;
+    private final AdminPanel adminPanel;
     private DBConnection dbConnection;
 
     private final JTabbedPane tabbedPane;
@@ -108,6 +109,7 @@ public class AppWindow extends JFrame {
         customerAddPanel = new CustomerAddPanel(this);
         productAddPanel = new ProductAddPanel(this);
         alterOfferPanel = new AlterOfferPanel(this);
+        adminPanel = new AdminPanel(this);
 
         tabbedPane.add(searchInputPanel, "Search products");
         tabbedPane.add(searchResultPanel, "Search results");
@@ -115,6 +117,7 @@ public class AppWindow extends JFrame {
         tabbedPane.add(customerAddPanel, "Add customer");
         tabbedPane.add(productAddPanel, "Add product");
         tabbedPane.add(alterOfferPanel, "Change offer");
+        tabbedPane.add(adminPanel, "backups");
 
         add(tabbedPane, BorderLayout.CENTER);
         add(hintText, BorderLayout.NORTH);

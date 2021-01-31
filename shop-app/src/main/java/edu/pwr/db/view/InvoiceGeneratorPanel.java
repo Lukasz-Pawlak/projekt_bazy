@@ -187,8 +187,8 @@ public class InvoiceGeneratorPanel extends JPanel {
 
     }
     public int getToKnowId(int id){
-        String SQL = "select product from offer where id=1";//+String.valueOf(id);
-        int productID = appWindow.getDbConnection().getJDBCTemplate().queryForObject(SQL,Integer.class);
+        String SQL = "select product from offer where id = " + id;
+        int productID = appWindow.getDbConnection().getJDBCTemplate().queryForObject(SQL, Integer.class);
         return productID;
     }
 
