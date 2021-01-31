@@ -47,7 +47,7 @@ public class AppWindow extends JFrame {
         state = state.next();
         //JOptionPane.showMessageDialog(this, "select offers",
         //        "info", JOptionPane.INFORMATION_MESSAGE);
-        this.showHintText("");
+        this.showHintText("choose offer to be added to invoice");
         tabbedPane.setSelectedComponent(searchInputPanel);
     }
 
