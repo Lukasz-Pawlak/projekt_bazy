@@ -1,6 +1,9 @@
 package edu.pwr.db.view;
 
+import edu.pwr.db.model.ClientItem;
 import edu.pwr.db.model.Item;
+import edu.pwr.db.model.JoinedOfferItem;
+import edu.pwr.db.model.JoinedOfferJdbcTemplate;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -16,12 +19,16 @@ public class InvoiceGeneratorPanel extends JPanel {
     private final JTextArea unitsCountInput;
     private final JTextArea alreadyCreatedView;
     private final JTextArea selectedOfferInfo;
+    private final AppWindow appWindow;
+
     /**
      * -1 means that we do not have invoice selected (created)
      */
     private int invoiceID = -1;
+    private JoinedOfferItem currentOffer;
 
-    public InvoiceGeneratorPanel() {
+    public InvoiceGeneratorPanel(AppWindow appWindow) {
+        this.appWindow = appWindow;
         newInvoice = new JButton("create new");
         addOffer = new JButton("add entry");
         endCreation = new JButton("confirm");
@@ -41,11 +48,14 @@ public class InvoiceGeneratorPanel extends JPanel {
             addOffer.setEnabled(true);
             endCreation.setEnabled(true);
             cancelCreation.setEnabled(true);
-            // TODO: SQL stuff
+
+            JOptionPane.showMessageDialog(appWindow, "choose client",
+                    "info", JOptionPane.INFORMATION_MESSAGE);
+            appWindow.startInvoice();
         });
 
         addOffer.addActionListener(e -> {
-            // TODO: link to offer selection, then take selected thing etc.
+            appWindow.showSearchPanel();
         });
 
         endCreation.addActionListener(e -> {
@@ -108,5 +118,18 @@ public class InvoiceGeneratorPanel extends JPanel {
         add(panel, BorderLayout.CENTER);
         Border padding = BorderFactory.createEmptyBorder(10, 10, 20, 20);
         setBorder(padding);
+    }
+
+    public void setOffer(JoinedOfferItem offer) {
+        unitsCountInput.setText("");
+        selectedOfferInfo.setText(offer.toString());
+        currentOffer = offer;
+    }
+
+    public void setClient(ClientItem client) {
+        // TODO: here insert into invoices new entry based on client got
+        //  also set internal invoice id
+        invoiceID = -1;
+        appWindow.nextState(); // next state is INVOICE_LINE, where we will be getting offers
     }
 }

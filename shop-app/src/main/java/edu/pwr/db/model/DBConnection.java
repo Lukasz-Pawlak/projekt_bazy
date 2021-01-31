@@ -47,6 +47,12 @@ public class DBConnection {
         r.setDataSource(dataSource);
         return r;
     }
+
+    public ClientJdbcTemplate getClientTemplate() throws SQLException {
+        var r = new ClientJdbcTemplate();
+        r.setDataSource(dataSource);
+        return r;
+    }
 }
 
 class DataSourceFactory {

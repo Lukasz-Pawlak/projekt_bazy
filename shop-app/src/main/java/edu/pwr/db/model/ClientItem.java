@@ -18,7 +18,7 @@ public class ClientItem extends Item{
         this.surname=surname;
     }
     public void setAddress(String address){
-        this.surname=surname;
+        this.address=address;
     }
 
     public String getName(){
@@ -30,7 +30,6 @@ public class ClientItem extends Item{
     public String getAddress(){
         return address;
     }
-
     public int getId(){
         return id;
     }

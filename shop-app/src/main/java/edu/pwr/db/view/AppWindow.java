@@ -1,16 +1,53 @@
 package edu.pwr.db.view;
 
-import edu.pwr.db.model.DBConnection;
-import edu.pwr.db.model.Item;
-import edu.pwr.db.model.JoinedOfferJdbcTemplate;
+import edu.pwr.db.model.*;
 
 import javax.swing.*;
 import javax.swing.plaf.metal.MetalTabbedPaneUI;
 import java.awt.*;
+import java.sql.SQLException;
 import java.util.List;
 
 // let's make this class controller also
 public class AppWindow extends JFrame {
+    private State state = State.NONE;
+
+    void resetState() {
+        state = State.NONE;
+    }
+    State getCurrentState() {
+        return state;
+    }
+    void nextState() {
+        state = state.next();
+    }
+
+    void startInvoice() {
+        state = State.INVOICE_CLIENT;
+        try {
+            var template = dbConnection.getClientTemplate();
+            var list = template.list();
+            searchResultPanel.setItems(list);
+            tabbedPane.setSelectedComponent(searchResultPanel);
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+            // TODO: error message for user
+        }
+    }
+
+    void showSearchPanel() {
+        tabbedPane.setSelectedComponent(searchInputPanel);
+    }
+
+    void setInvoiceClient(ClientItem client) {
+        invoiceGeneratorPanel.setClient(client);
+        state = state.next();
+        JOptionPane.showMessageDialog(this, "select offers",
+                "info", JOptionPane.INFORMATION_MESSAGE);
+        tabbedPane.setSelectedComponent(searchInputPanel);
+    }
+
     public static void main(String[] args){
         new AppWindow().start();
     }
@@ -45,9 +82,9 @@ public class AppWindow extends JFrame {
             }
         });
 
-        searchResultPanel = new SearchResultPanel();
+        searchResultPanel = new SearchResultPanel(this);
         searchInputPanel = new SearchInputPanel(this);
-        invoiceGeneratorPanel = new InvoiceGeneratorPanel();
+        invoiceGeneratorPanel = new InvoiceGeneratorPanel(this);
         customerAddPanel = new CustomerAddPanel(this);
         productAddPanel = new ProductAddPanel(this);
         alterOfferPanel = new AlterOfferPanel(this);
@@ -85,5 +122,27 @@ public class AppWindow extends JFrame {
         }
         searchResultPanel.setItems(list);
         tabbedPane.setSelectedComponent(searchResultPanel);
+    }
+
+    public void setInvoiceOffer(JoinedOfferItem result) {
+        invoiceGeneratorPanel.setOffer(result);
+        tabbedPane.setSelectedComponent(invoiceGeneratorPanel);
+    }
+}
+
+enum State {
+    NONE,
+    INVOICE_CLIENT,
+    INVOICE_LINE,
+    OFFER_PRODUCT;
+
+    public State next() {
+        switch (this) {
+            case NONE: return NONE;
+            case INVOICE_LINE: return NONE;
+            case OFFER_PRODUCT: return NONE;
+            case INVOICE_CLIENT: return INVOICE_LINE;
+            default: return null;
+        }
     }
 }

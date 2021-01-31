@@ -7,12 +7,12 @@ import javax.sql.DataSource;
 import java.sql.SQLException;
 import java.util.List;
 
-public class ClientJdbcTemplate extends SmallItemJdbcTemplate {
+public class ClientJdbcTemplate {
     protected RowMapper<Item> mapper;
     private JdbcTemplate jdbcTemplate;
 
-    public ClientJdbcTemplate(String tableName) throws SQLException {
-        super(tableName);
+    public ClientJdbcTemplate() throws SQLException {
+        mapper = new ClientItemMapper();
     }
 
     public void setDataSource(DataSource dataSource) {

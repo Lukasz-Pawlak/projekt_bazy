@@ -95,6 +95,9 @@ public class CustomerAddPanel extends JPanel {
             callableStatement.setString(2,inputSurname.getText().toString());
             callableStatement.setString(3,inputAddress.getText().toString());
             callableStatement.executeQuery();
+            if (appWindow.getCurrentState().equals(State.INVOICE_CLIENT)) {
+                appWindow.startInvoice();
+            }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }

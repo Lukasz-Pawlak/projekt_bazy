@@ -1,6 +1,8 @@
 package edu.pwr.db.view;
 
+import edu.pwr.db.model.ClientItem;
 import edu.pwr.db.model.Item;
+import edu.pwr.db.model.JoinedOfferItem;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -10,7 +12,9 @@ import java.util.Collection;
 public class SearchResultPanel extends JPanel {
     private final DefaultListModel<Item> model;
     private final JButton selectButton;
-    public SearchResultPanel() {
+    private final AppWindow appWindow;
+    public SearchResultPanel(AppWindow appWindow) {
+        this.appWindow = appWindow;
         model = new DefaultListModel<>();
         JList<Item> items = new JList<>(model);
         selectButton = new JButton("select");
@@ -18,12 +22,21 @@ public class SearchResultPanel extends JPanel {
         add(items, BorderLayout.CENTER);
         add(selectButton, BorderLayout.SOUTH);
 
-        /*selectButton.addActionListener(e -> {
+        selectButton.addActionListener(e -> {
             Item result = items.getSelectedValue();
-            if (result != null) // dont forget about this line <--
-            // TODO: do something with selected value
-            Logger.debug(result.toString());
-        });*/
+            if (result != null) {
+                switch (appWindow.getCurrentState()) {
+                    case INVOICE_CLIENT:
+                        appWindow.setInvoiceClient((ClientItem) result);
+                        break;
+                    case INVOICE_LINE:
+                        appWindow.setInvoiceOffer((JoinedOfferItem) result);
+                        break;
+                    default:
+
+                }
+            }
+        });
 
         setBorder(new EmptyBorder(40, 40, 40, 40)); // padding
     }
