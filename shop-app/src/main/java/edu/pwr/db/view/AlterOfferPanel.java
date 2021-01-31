@@ -114,9 +114,10 @@ public class AlterOfferPanel extends JPanel {
 
     private void addOfferVariant() {
         try {
+            var template = appWindow.getDbConnection().getJoinedOfferTemplate();
             int amount = Integer.parseInt(this.amount.getText());
             double price = Double.parseDouble(this.price.getText());
-            // TODO: SQL, probably add SQLException catch down here vv
+            template.insertOffer(product.getId(),price,amount);
         }
         catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(appWindow,
@@ -127,9 +128,11 @@ public class AlterOfferPanel extends JPanel {
 
     private void updateOfferVariant() {
         try {
+            var template = appWindow.getDbConnection().getJoinedOfferTemplate();
             int amount = Integer.parseInt(this.amount.getText());
             double price = Double.parseDouble(this.price.getText());
-            // TODO: SQL, probably add SQLException catch down here vv
+            template.updateOffer(offer.getId(),price,amount);
+
         }
         catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(appWindow,
