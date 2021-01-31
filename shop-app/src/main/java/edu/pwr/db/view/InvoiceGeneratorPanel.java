@@ -1,16 +1,16 @@
 package edu.pwr.db.view;
 
-import edu.pwr.db.model.ClientItem;
-import edu.pwr.db.model.Item;
-import edu.pwr.db.model.JoinedOfferItem;
-import edu.pwr.db.model.JoinedOfferJdbcTemplate;
+import com.mysql.jdbc.Connection;
+import edu.pwr.db.model.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class InvoiceGeneratorPanel extends JPanel {
     private final JButton newInvoice;
@@ -23,6 +23,7 @@ public class InvoiceGeneratorPanel extends JPanel {
     private final JTextArea selectedOfferInfo;
     private final AppWindow appWindow;
 
+
     /**
      * -1 means that we do not have invoice selected (created)
      */
@@ -31,6 +32,7 @@ public class InvoiceGeneratorPanel extends JPanel {
 
     public InvoiceGeneratorPanel(AppWindow appWindow) {
         this.appWindow = appWindow;
+
         newInvoice = new JButton("create new");
         addOffer = new JButton("add entry");
         endCreation = new JButton("confirm");
@@ -66,16 +68,18 @@ public class InvoiceGeneratorPanel extends JPanel {
 
                 try {
                     int amount = Integer.parseInt(unitsCountInput.getText());
-                    // TODO: SQL stuff [adding entry to invoiceLine], delete line 'throw new .."
+                    int productID=getToKnowId(currentOffer.getId());
+                    addLine(invoiceID,productID,amount);
+                   // String SQL = "SELECT product FROM offer WHERE id=" + String.valueOf(currentOffer.getId());
 
+                    // TODO: SQL stuff [adding entry to invoiceLine], delete line 'throw new .."
                     // TODO: disable & enable buttons (also in latter listeners)
 
                     // TODO: make prettier display of added line
                     alreadyCreatedView.setText(
                             alreadyCreatedView.getText() + "\n" + currentOffer);
-                    throw new SQLException();
                 }
-                catch (NumberFormatException | SQLException ex) {
+                catch (NumberFormatException ex) {
                     JOptionPane.showMessageDialog(appWindow, "bad input","error", JOptionPane.ERROR_MESSAGE);
                 }
             }
@@ -86,7 +90,7 @@ public class InvoiceGeneratorPanel extends JPanel {
             addOffer.setEnabled(false);
             endCreation.setEnabled(false);
             cancelCreation.setEnabled(false);
-            // TODO: make sure that database does not need to know that we are done, or handle it
+            confirm(invoiceID);
         });
 
         cancelCreation.addActionListener(e -> {
@@ -94,7 +98,7 @@ public class InvoiceGeneratorPanel extends JPanel {
             addOffer.setEnabled(false);
             endCreation.setEnabled(false);
             cancelCreation.setEnabled(false);
-            // TODO: SQL stuff -> erase entries related to started invoice
+            removeUnfinished(invoiceID);
         });
 
         // display
@@ -152,10 +156,66 @@ public class InvoiceGeneratorPanel extends JPanel {
         currentOffer = offer;
     }
 
-    public void setClient(ClientItem client) {
-        // TODO: here insert into invoices new entry based on client got
-        //  also set internal invoice id
-        invoiceID = -1;
-        //appWindow.nextState(); // next state is INVOICE_LINE, where we will be getting offers, but appWindow sets it by itself
+    public void setClient(ClientItem client) { //TWORZYMY INVOICE DLA KLIENTA
+        int clientID=client.getId();
+        CallableStatement callableStatement;
+        try{
+            Connection conn = (Connection) appWindow.getDbConnection().getConn();
+            String SQL = "{CALL addInvoice(?,?)}";
+            callableStatement=conn.prepareCall(SQL);
+            callableStatement.setInt(1,clientID);
+            callableStatement.registerOutParameter(2, Types.INTEGER);
+            callableStatement.executeQuery();
+            invoiceID=callableStatement.getInt(2); // TUTAJ POBIERAMY WYNIK
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public void addLine(int inv,int product,int units){
+        CallableStatement callableStatement;
+        try{
+            Connection conn = (Connection) appWindow.getDbConnection().getConn();
+            String SQL = "{CALL addLine(?,?,?)}";
+            callableStatement=conn.prepareCall(SQL);
+            callableStatement.setInt(1,inv);
+            callableStatement.setInt(2,product);
+            callableStatement.setInt(3,units);
+            callableStatement.executeQuery();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+    }
+    public int getToKnowId(int id){
+        String SQL = "select product from offer where id=1";//+String.valueOf(id);
+        int productID = appWindow.getDbConnection().getJDBCTemplate().queryForObject(SQL,Integer.class);
+        return productID;
+    }
+
+    public void confirm(int inv){
+        CallableStatement callableStatement;
+        try{
+            Connection conn = (Connection) appWindow.getDbConnection().getConn();
+            String SQL = "{CALL confirm(?)}";
+            callableStatement=conn.prepareCall(SQL);
+            callableStatement.setInt(1,inv);
+            callableStatement.executeQuery();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+    }
+
+    public void removeUnfinished(int inv){
+        CallableStatement callableStatement;
+        try{
+            Connection conn = (Connection) appWindow.getDbConnection().getConn();
+            String SQL = "{CALL removeUnfinished(?)}";
+            callableStatement=conn.prepareCall(SQL);
+            callableStatement.setInt(1,inv);
+            callableStatement.executeQuery();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
 }

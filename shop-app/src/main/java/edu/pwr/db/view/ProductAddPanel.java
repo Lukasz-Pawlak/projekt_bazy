@@ -190,8 +190,7 @@ public class ProductAddPanel extends JPanel {
 
                 name = inputName.getText();
                 addProduct(brand,color,coverageName,coverageValue,type,name);
-
-            } catch (SQLException | NumberFormatException ex) {
+            } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(appWindow, "Wrong input", "Warning", JOptionPane.ERROR_MESSAGE);
             }
         });

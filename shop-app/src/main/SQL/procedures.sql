@@ -48,6 +48,17 @@ begin
 end; $$
 delimiter ;
 
+delimiter $$
+DROP PROCEDURE if EXISTS removeUnfinished $$
+CREATE PROCEDURE removeUnfinished(in id_in INT)
+BEGIN
+    DELETE FROM invoiceLine
+    WHERE invoice = id_in;
+    DELETE FROM invoices
+    WHERE id = id_in;
+END; $$
+delimiter ;
+
 -- saving for later since it's already here, definitely will get handy
 /*      select * from Products
         inner join brands b2 on products.brand = b2.id
