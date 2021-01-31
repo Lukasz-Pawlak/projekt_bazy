@@ -1,5 +1,6 @@
 package edu.pwr.db.view;
 
+import edu.pwr.db.model.DBConnection;
 import edu.pwr.db.model.JoinedOfferItem;
 import edu.pwr.db.model.JoinedProductItem;
 
@@ -43,8 +44,15 @@ public class AlterOfferPanel extends JPanel {
         });
 
         removeOffer.addActionListener(e -> {
-            // TODO: SQL remove offer of id
-            offer.getId();
+            if (offer != null) {
+                var template = appWindow.getDbConnection().getJoinedOfferTemplate();
+                template.removeOfferById(offer.getId());
+                offer = null;
+                productDescription.setText("");
+                price.setText("");
+                amount.setText("");
+                appWindow.resetState();
+            }
         });
 
         addOffer.addActionListener(e -> {

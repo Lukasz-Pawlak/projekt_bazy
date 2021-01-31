@@ -1,6 +1,7 @@
 package edu.pwr.db.model;
 
 import edu.pwr.db.Logger;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
@@ -20,6 +21,10 @@ public class JoinedOfferJdbcTemplate {
         jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
+    public void removeOfferById(int id) throws DataAccessException {
+        String SQL = "delete from offer where id = ?";
+        jdbcTemplate.update(SQL, id);
+    }
 
     public List<Item> list(Item brand, Item color, Item coverageLevel, Item type) {
         String SQL =
