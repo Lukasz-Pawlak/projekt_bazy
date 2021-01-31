@@ -13,6 +13,7 @@ import java.util.List;
 public class AppWindow extends JFrame {
     private State state = State.NONE;
     private final JTextArea hintText;
+    private LoginDialog loginDialog;
 
     void resetState() {
         state = State.NONE;
@@ -102,7 +103,6 @@ public class AppWindow extends JFrame {
                 return 40; // this is pixel height of the tab
             }
         });
-
         searchResultPanel = new SearchResultPanel(this);
         searchInputPanel = new SearchInputPanel(this);
         invoiceGeneratorPanel = new InvoiceGeneratorPanel(this);
@@ -111,22 +111,25 @@ public class AppWindow extends JFrame {
         alterOfferPanel = new AlterOfferPanel(this);
         adminPanel = new AdminPanel(this);
 
-        tabbedPane.add(searchInputPanel, "Search products");
-        tabbedPane.add(searchResultPanel, "Search results");
-        tabbedPane.add(invoiceGeneratorPanel, "Create invoice");
-        tabbedPane.add(customerAddPanel, "Add customer");
-        tabbedPane.add(productAddPanel, "Add product");
-        tabbedPane.add(alterOfferPanel, "Change offer");
-        tabbedPane.add(adminPanel, "backups");
-
         add(tabbedPane, BorderLayout.CENTER);
         add(hintText, BorderLayout.NORTH);
     }
 
     public void start() {
-        new LoginDialog(this);
+        loginDialog=new LoginDialog(this);
         searchInputPanel.refreshContents(); // this is first load of contents
         productAddPanel.refreshContents();
+        tabbedPane.add(searchInputPanel, "Search products");
+        tabbedPane.add(searchResultPanel, "Search results");
+        tabbedPane.add(invoiceGeneratorPanel, "Create invoice");
+        tabbedPane.add(customerAddPanel, "Add customer");
+        if(!"root".equals(loginDialog.getUsername())); //
+        {   System.out.println("rooooooooooooooooooot/");
+            tabbedPane.add(productAddPanel, "Add product");
+            tabbedPane.add(alterOfferPanel, "Change offer");
+        }
+        if(loginDialog.getUsername()!="admin");
+        tabbedPane.add(adminPanel, "backups");
         setVisible(true);
     }
 
