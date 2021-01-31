@@ -50,7 +50,7 @@ public class AppWindow extends JFrame {
         invoiceGeneratorPanel = new InvoiceGeneratorPanel();
         customerAddPanel = new CustomerAddPanel();
         productAddPanel = new ProductAddPanel(this);
-        alterOfferPanel = new AlterOfferPanel();
+        alterOfferPanel = new AlterOfferPanel(this);
 
         tabbedPane.add(searchInputPanel, "Search products");
         tabbedPane.add(searchResultPanel, "Search results");
