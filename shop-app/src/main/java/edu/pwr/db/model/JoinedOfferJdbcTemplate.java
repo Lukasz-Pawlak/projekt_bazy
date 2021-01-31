@@ -25,6 +25,14 @@ public class JoinedOfferJdbcTemplate {
         String SQL = "delete from offer where id = ?";
         jdbcTemplate.update(SQL, id);
     }
+    public void insertOffer(int product,double price,int units){
+        String SQL = "insert into offer(pricePerUnit,unitsInStock,product) values(?,?,?)";
+        jdbcTemplate.update(SQL,price,units,product);
+    }
+    public void updateOffer(int id,double price,int amount){
+        String SQL = "update offer set pricePerUnit=?,unitsInStock=? where id=?";
+        jdbcTemplate.update(SQL,price,amount,id);
+    }
 
     public List<Item> list(Item brand, Item color, Item coverageLevel, Item type) {
         String SQL =
