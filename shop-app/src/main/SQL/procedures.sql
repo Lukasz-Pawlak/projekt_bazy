@@ -59,6 +59,52 @@ BEGIN
 END; $$
 delimiter ;
 
+delimiter $$
+drop function if exists  addInvoice $$
+create procedure addInvoice(IN cl INT, OUT fv INT)
+begin
+    declare date DATETIME;
+    SET date=now();
+    insert into invoices (dateIssued,CLIENT,confirmed)
+    VALUES (date,cl,false);
+    select id from invoices where client=cl and dateIssued=date into fv;
+end $$
+delimiter ;
+
+delimiter $$
+drop procedure if exists addLine $$
+create procedure addLine(in inv int,in prod int,in units_ int)
+begin
+    DECLARE t DECIMAL(5,2);
+    SELECT pricePerUnit FROM offer WHERE product=prod into t;
+    INSERT INTO invoiceline (pricePerUnit,units,product,invoice)
+    VALUES (t,units_,prod,inv);
+end $$
+delimiter ;
+
+
+
+delimiter $$
+DROP PROCEDURE if EXISTS confirm $$
+CREATE PROCEDURE confirm(IN inv INT)
+BEGIN
+    DECLARE pom INT;
+    SELECT id FROM invoices WHERE id=inv INTO pom;
+    IF EXISTS (SELECT *  FROM invoices WHERE id=pom AND confirmed=TRUE) THEN
+        signal sqlstate '45000' set message_text="Cannot confirm invoice";
+    ELSE
+        START TRANSACTION;
+        UPDATE offer,invoiceline
+        SET offer.unitsInStock=offer.unitsInStock-invoiceline.units
+        WHERE invoiceline.invoice=pom AND offer.product=invoiceline.product;
+        COMMIT;
+        UPDATE invoices
+        SET confirmed=TRUE
+        WHERE id=pom;
+    END IF;
+END $$
+delimiter ;
+
 -- saving for later since it's already here, definitely will get handy
 /*      select * from Products
         inner join brands b2 on products.brand = b2.id
