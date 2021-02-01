@@ -124,13 +124,11 @@ public class AppWindow extends JFrame {
         tabbedPane.add(searchResultPanel, "Search results");
         tabbedPane.add(invoiceGeneratorPanel, "Create invoice");
         tabbedPane.add(customerAddPanel, "Add customer");
-        Logger.debug(Login.getUsername()+ "++");
-        if(!Login.getUsername().equals("root")) {
-            Logger.debug("rooooooooooooooooooot/");
+        if(!Login.getUsername().equals("employee")) { //jak nie pracownik to dodaje
             tabbedPane.add(productAddPanel, "Add product");
             tabbedPane.add(alterOfferPanel, "Change offer");
         }
-        if(!Login.getUsername().equals("admin"))
+        if(Login.getUsername().equals("admin")) //jak admin to dodaje
             tabbedPane.add(adminPanel, "backups");
         setVisible(true);
     }
