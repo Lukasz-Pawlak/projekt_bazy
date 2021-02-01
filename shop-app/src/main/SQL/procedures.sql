@@ -60,7 +60,7 @@ END; $$
 delimiter ;
 
 delimiter $$
-drop function if exists  addInvoice $$
+drop procedure if exists  addInvoice $$
 create procedure addInvoice(IN cl INT, OUT fv INT)
 begin
     declare date DATETIME;
