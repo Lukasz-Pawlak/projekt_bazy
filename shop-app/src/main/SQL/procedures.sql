@@ -63,11 +63,11 @@ delimiter $$
 drop procedure if exists  addInvoice $$
 create procedure addInvoice(IN cl INT, OUT fv INT)
 begin
-    declare date DATETIME;
-    SET date=now();
+    SET @date=now();
     insert into invoices (dateIssued,CLIENT,confirmed)
-    VALUES (date,cl,false);
-    select id from invoices where client=cl and dateIssued=date into fv;
+    VALUES (@date,cl,false);
+    Set @result = (select id from invoices where client=cl and dateIssued=@date limit 1);
+    SELECT @result INTO fv;
 end $$
 delimiter ;
 
@@ -75,13 +75,12 @@ delimiter $$
 drop procedure if exists addLine $$
 create procedure addLine(in inv int,in prod int,in units_ int)
 begin
-    DECLARE t DECIMAL(5,2);
-    SELECT pricePerUnit FROM offer WHERE product=prod into t;
+    SET @t=(SELECT pricePerUnit FROM offer WHERE product=prod);
     INSERT INTO invoiceline (pricePerUnit,units,product,invoice)
-    VALUES (t,units_,prod,inv);
+    VALUES (@t,units_,prod,inv);
+
 end $$
 delimiter ;
-
 
 
 delimiter $$

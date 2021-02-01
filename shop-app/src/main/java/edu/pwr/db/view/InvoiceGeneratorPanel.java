@@ -1,6 +1,7 @@
 package edu.pwr.db.view;
 
 import com.mysql.jdbc.Connection;
+import edu.pwr.db.Logger;
 import edu.pwr.db.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -167,6 +168,7 @@ public class InvoiceGeneratorPanel extends JPanel {
             callableStatement.registerOutParameter(2, Types.INTEGER);
             callableStatement.executeQuery();
             invoiceID=callableStatement.getInt(2); // TUTAJ POBIERAMY WYNIK
+            Logger.debug(invoiceID + " <-- new invoice");
         } catch (Exception e) {
             e.printStackTrace();
         }
