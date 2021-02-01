@@ -1,10 +1,12 @@
 package edu.pwr.db.model;
 
+import edu.pwr.db.Logger;
+
 import java.sql.SQLException;
 
 public class Login {
     private static DBConnection establishedConnection;
-    private static String username, password;
+    private static String username, password, role;
 
     public static DBConnection authenticate(String username, String password) {
         establishedConnection = new DBConnection();
@@ -12,6 +14,8 @@ public class Login {
             establishedConnection.connect(username, password);
             Login.password = password;
             Login.username = username;
+            Login.role = establishedConnection.getRole().get(0);
+            Logger.debug(role);
         } catch (SQLException throwables) {
             //throwables.printStackTrace();
             return null;

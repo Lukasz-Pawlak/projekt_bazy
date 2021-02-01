@@ -6,10 +6,25 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 
 public class DBConnection {
     private java.sql.Connection conn;
     private DataSource dataSource;
+
+    public List<String> getRole() {
+        String SQL = "select current_role()";
+        var template = new JdbcTemplate(dataSource);
+        return template.query(SQL, (ds, i) -> {
+            try {
+                return ds.getString("current_role()");
+            }
+            catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            return null;
+        });
+    }
 
     public void connect(String userName, String password) throws SQLException {
         if (conn != null) {
