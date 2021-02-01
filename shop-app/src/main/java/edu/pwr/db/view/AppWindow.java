@@ -128,7 +128,7 @@ public class AppWindow extends JFrame {
             tabbedPane.add(productAddPanel, "Add product");
             tabbedPane.add(alterOfferPanel, "Change offer");
         }
-        if(Login.getUsername().equals("admin")) //jak admin to dodaje
+        if(Login.getUsername().equals("admin"))
             tabbedPane.add(adminPanel, "backups");
         setVisible(true);
     }

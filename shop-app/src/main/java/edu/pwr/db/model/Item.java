@@ -7,7 +7,7 @@ public abstract class Item {
     public static final Item NOT_SELECTED = new FakeItem(" < not selected >");
     public static final Item NO_RESULTS = new FakeItem(" < no results >");
 
-    private static class FakeItem extends Item {
+    public static class FakeItem extends Item {
         private final String name;
         FakeItem(String name) {
             this.name = name;

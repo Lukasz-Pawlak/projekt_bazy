@@ -26,7 +26,7 @@ public class SearchResultPanel extends JPanel {
 
         selectButton.addActionListener(e -> {
             Item result = items.getSelectedValue();
-            if (result != null) {
+            if (result != null && !(result instanceof Item.FakeItem)) {
                 switch (appWindow.getCurrentState()) {
                     case INVOICE_CLIENT:
                         appWindow.setInvoiceClient((ClientItem) result);
